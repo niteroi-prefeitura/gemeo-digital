@@ -1,0 +1,13 @@
+{
+    "name": "gdn-monorepo",
+    "private": true,
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "concurrently -n client,bff -c green,blue \"pnpm --filter client dev\" \"pnpm --filter bff dev\"",
+        "docs:start": "pnpm --filter docs start",
+        "docs:build": "pnpm --filter docs build"
+    },
+    "devDependencies": {
+        "concurrently": "^9.1.2"
+    }
+}
