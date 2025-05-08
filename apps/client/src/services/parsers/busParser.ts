@@ -1,5 +1,5 @@
 import BusTrip from "../../domain/BusTrip";
-import { Trip } from "../../schemas/busSchema";
+import { Trip } from "@gdn/shared";
 
 const busParser = (apiData: Trip[]) => {
   const tripList = Object.values(apiData);

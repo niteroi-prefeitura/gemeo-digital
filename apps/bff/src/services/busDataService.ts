@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BusMapSchema, Trip } from "../schemas/busSchema";
+import { BusMapSchema, Trip } from "@gdn/shared";
 import tripParser from "../lib/busParser";
 import { env } from "../config/env";
 

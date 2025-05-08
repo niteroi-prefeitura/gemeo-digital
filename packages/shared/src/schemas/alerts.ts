@@ -4,7 +4,7 @@ import {
   GeometrySchema,
   SpatialReferenceSchema,
   UniqueIdFieldSchema,
-} from "./commonGisSchema";
+} from "./gis";
 
 const AlertAttributesSchema = z.object({
   OBJECTID: z.number(),

@@ -1,4 +1,4 @@
-import { TrafficFeature } from "../schemas/trafficSchema";
+import { TrafficFeature } from "@gdn/shared";
 import { getAllFeatures } from "./gisService";
 
 let cache: TrafficFeature[] | null = null;

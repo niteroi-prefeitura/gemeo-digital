@@ -4,7 +4,7 @@ import {
   GeometryPropertiesSchema,
   SpatialReferenceSchema,
   UniqueIdFieldSchema,
-} from "./commonGisSchema";
+} from "./gis";
 
 const TrafficAttributesSchema = z.object({
   OBJECTID: z.number(),

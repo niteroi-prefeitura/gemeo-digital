@@ -1,10 +1,7 @@
 import { request } from "@esri/arcgis-rest-request";
 import { env } from "../config/env";
-import { AlertFeature, AlertsResponseSchema } from "../schemas/alertsSchema";
-import {
-  TrafficFeature,
-  TrafficResponseSchema,
-} from "../schemas/trafficSchema";
+import { AlertFeature, AlertsResponseSchema } from "@gdn/shared";
+import { TrafficFeature, TrafficResponseSchema } from "@gdn/shared";
 
 type FeatureTypeOptions = "Alerts" | "Traffic";
 

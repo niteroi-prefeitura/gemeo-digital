@@ -1,4 +1,4 @@
-import { AlertFeature } from "../schemas/alertsSchema";
+import { AlertFeature } from "@gdn/shared";
 import { getAllFeatures } from "./gisService";
 
 let cache: AlertFeature[] | null = null;

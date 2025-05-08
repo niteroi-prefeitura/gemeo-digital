@@ -1,5 +1,5 @@
 import { stringNormalizerLower } from "../utils/normalizer";
-import { BusMap, SingleTripSchema, Trip } from "../schemas/busSchema";
+import { BusMap, SingleTripSchema, Trip } from "@gdn/shared";
 
 const tripParser = (apiData: BusMap): Trip[] => {
   const tripList = Object.values(apiData);

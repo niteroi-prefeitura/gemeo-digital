@@ -1,4 +1,4 @@
-import { Trip } from "../schemas/busSchema";
+import { Trip } from "@gdn/shared";
 import { buildAxiosService } from "./axiosService";
 import busParser from "./parsers/busParser";
 
