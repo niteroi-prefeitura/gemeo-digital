@@ -1,4 +1,4 @@
-import { BusMapSchema } from "../src/schemas/busSchema";
+import { BusMapSchema } from "@gdn/shared";
 
 describe("BusMapSchema", () => {
   it("valida com sucesso um objeto de ônibus único correto", () => {

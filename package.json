@@ -4,6 +4,7 @@
     "version": "1.0.0",
     "scripts": {
         "dev": "concurrently -n client,bff -c green,blue \"pnpm --filter client dev\" \"pnpm --filter bff dev\"",
+        "test:bff": "pnpm --filter bff test",
         "packages:build": "pnpm --filter @gdn/shared build",
         "docs:start": "pnpm --filter docs start",
         "docs:build": "pnpm --filter docs build"

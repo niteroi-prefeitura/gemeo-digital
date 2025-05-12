@@ -2,7 +2,7 @@ import {
   SingleTripSchema,
   TripLocationSchema,
   TripBusInfoSchema,
-} from "../src/schemas/busSchema";
+} from "@gdn/shared";
 
 describe("TripLocationSchema", () => {
   it("valida localização válida", () => {
