@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[1903],{1912:e=>{e.exports=JSON.parse('{"blogBasePath":"/gemeo-digital/en/blog","blogTitle":"Blog","authorsListPath":"/gemeo-digital/en/blog/authors"}')}}]);
