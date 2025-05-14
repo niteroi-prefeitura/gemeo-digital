@@ -1,14 +1,13 @@
-import { useContext } from "react";
-import { BusTripsContext } from "../context";
 import BusTrip from "../domain/BusTrip";
 import buildBusDataService from "../services/busDataSevice";
+import { useBusStore } from "../stores/useBusStore";
 
 const useBusTrip = () => {
-  const context = useContext(BusTripsContext);
+  const { busData, setBusData } = useBusStore();
   const { getAllBusesData } = buildBusDataService();
 
   const onChangeTrips = (tripList: BusTrip[]) => {
-    context?.busTrips.setAllData(tripList);
+    setBusData(tripList);
   };
 
   const fetchBusData = async () => {
@@ -22,7 +21,7 @@ const useBusTrip = () => {
   };
 
   return {
-    busTrips: context?.busTrips.allData || [],
+    busTrips: busData,
     onChangeTrips,
     fetchBusData,
   };

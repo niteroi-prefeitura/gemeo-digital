@@ -1,15 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { BusTripsProvider } from "./context/provider";
-import { TrafficFeaturesProvider } from "./context/traffic/provider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BusTripsProvider>
-      <TrafficFeaturesProvider>
-        <App />
-      </TrafficFeaturesProvider>
-    </BusTripsProvider>
+    <App />
   </React.StrictMode>
 );

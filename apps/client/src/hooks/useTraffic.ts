@@ -1,14 +1,13 @@
-import { useContext } from "react";
-import { TrafficFeaturesContext } from "../context/traffic";
 import buildTrafficDataSerivce from "../services/trafficDataService";
 import { TrafficFeature } from "@gdn/shared";
+import { useTrafficStore } from "../stores/useTrafficStore";
 
 const useTraffic = () => {
-  const context = useContext(TrafficFeaturesContext);
+  const { trafficData, setTrafficData } = useTrafficStore();
   const { getTrafficFeatures } = buildTrafficDataSerivce();
 
   const onChangeTraffic = (trafficList: TrafficFeature[]) => {
-    context?.features.setAllData(trafficList);
+    setTrafficData(trafficList);
   };
 
   const fetchTrafficData = async () => {
@@ -23,7 +22,7 @@ const useTraffic = () => {
 
   return {
     fetchTrafficData,
-    trafficData: context?.features.data || [],
+    trafficData: trafficData,
     onChangeTraffic,
   };
 };
