@@ -7,15 +7,15 @@ import useWebScene from "./hooks/useWebScene";
 
 function App() {
   const mapRef = useRef<WebSceneViewHandle>(null);
-  const { isSceneLoaded, updateBusPositions, updateTrafficLines } =
+  const { isSceneLoaded, updateVisibleGraphics, updateTrafficLines } =
     useWebScene(mapRef);
   const { fetchBusData, busTrips } = useBusTrip();
   const { fetchTrafficData, trafficData } = useTraffic();
 
   useEffect(() => {
-    updateBusPositions(busTrips);
-    updateTrafficLines(trafficData);
-  }, [busTrips, trafficData]);
+    updateVisibleGraphics(busTrips);
+    /* updateTrafficLines(trafficData); */
+  }, [busTrips]);
 
   useEffect(() => {
     if (isSceneLoaded) {

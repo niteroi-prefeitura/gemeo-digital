@@ -1,3 +1,4 @@
+import generateHashId from "../utils/generateHashId";
 import { stringNormalizerLower } from "../utils/normalizer";
 import { BusMap, SingleTripSchema, Trip } from "@gdn/shared";
 
@@ -5,7 +6,7 @@ const tripParser = (apiData: BusMap): Trip[] => {
   const tripList = Object.values(apiData);
   return tripList.map((trip) => {
     return SingleTripSchema.parse({
-      id: trip.tripId,
+      id: generateHashId(trip.tripId),
       routeId: trip.routeId,
       currentLocation: {
         latitude: trip.lat,
