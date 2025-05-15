@@ -1,4 +1,4 @@
-import { RefObject, useLayoutEffect, useState } from "react";
+import { RefObject, useEffect, useLayoutEffect, useState } from "react";
 import BusTrip from "../domain/BusTrip";
 import { WebSceneViewHandle } from "../components/WebSceneView";
 import Graphic from "@arcgis/core/Graphic";
@@ -7,14 +7,15 @@ import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
 import Polyline from "@arcgis/core/geometry/Polyline";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import { TrafficFeature } from "@gdn/shared";
-import { useGraphicsStore } from "../stores/useGraphicsStore";
+import useGraphics from "./useGraphics";
 
 const useWebScene = (ref: RefObject<WebSceneViewHandle | null>) => {
   const webSceneRef = ref.current?.getView();
   const mountedBusRef = ref.current?.getBusGraphics();
   const mountedTrafficRef = ref.current?.getTrafficGraphics();
   const [isSceneLoaded, setIsSceneLoaded] = useState(false);
-  const { getGraphic } = useGraphicsStore();
+  const [isStationary, setIsStationary] = useState(true);
+  const { buildBusGraphics } = useGraphics();
 
   useLayoutEffect(() => {
     (async () => {
@@ -24,6 +25,12 @@ const useWebScene = (ref: RefObject<WebSceneViewHandle | null>) => {
       }
     })();
   }, [ref.current?.isReady()]);
+
+  useEffect(() => {
+    webSceneRef?.watch("stationary", (isStationary) => {
+      setIsStationary(isStationary);
+    });
+  });
 
   const updateBusPositions = async (busTripData: BusTrip[]) => {
     if (!isSceneLoaded || !mountedBusRef) return;
@@ -138,10 +145,8 @@ const useWebScene = (ref: RefObject<WebSceneViewHandle | null>) => {
     });
 
     webSceneRef?.graphics.removeAll();
-    console.log("busData:", busData.length + 1);
-    console.log("visibleItems:", visibleItems.length + 1);
     visibleItems.forEach((item) => {
-      const graphic = getGraphic(item.id);
+      const graphic = buildBusGraphics(item);
       if (graphic) {
         webSceneRef?.graphics.add(graphic);
       }
@@ -150,6 +155,7 @@ const useWebScene = (ref: RefObject<WebSceneViewHandle | null>) => {
 
   return {
     isSceneLoaded,
+    isStationary,
     updateBusPositions,
     updateTrafficLines,
     updateVisibleGraphics,

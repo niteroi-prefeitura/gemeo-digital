@@ -51,7 +51,7 @@ const useGraphics = () => {
     });
   };
 
-  return { createBusGraphics, destroyBusGraphics };
+  return { createBusGraphics, destroyBusGraphics, buildBusGraphics };
 };
 
 export default useGraphics;
