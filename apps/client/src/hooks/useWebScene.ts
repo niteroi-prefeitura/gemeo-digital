@@ -15,7 +15,7 @@ const useWebScene = (ref: RefObject<WebSceneViewHandle | null>) => {
   const mountedTrafficRef = ref.current?.getTrafficGraphics();
   const [isSceneLoaded, setIsSceneLoaded] = useState(false);
   const [isStationary, setIsStationary] = useState(true);
-  const { buildBusGraphics } = useGraphics();
+  const { createBusGraphics, destroyBusGraphics } = useGraphics();
 
   useLayoutEffect(() => {
     (async () => {
@@ -144,13 +144,12 @@ const useWebScene = (ref: RefObject<WebSceneViewHandle | null>) => {
       return visibleExtent.contains(point);
     });
 
-    webSceneRef?.graphics.removeAll();
-    visibleItems.forEach((item) => {
-      const graphic = buildBusGraphics(item);
-      if (graphic) {
-        webSceneRef?.graphics.add(graphic);
-      }
-    });
+    const notVisibleItems = busData.filter(
+      (item) => !visibleItems.includes(item)
+    );
+
+    destroyBusGraphics(notVisibleItems, webSceneRef!);
+    createBusGraphics(visibleItems, webSceneRef!);
   };
 
   return {

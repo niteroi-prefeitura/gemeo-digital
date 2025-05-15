@@ -3,9 +3,10 @@ import BusTrip from "../domain/BusTrip";
 import { useGraphicsStore } from "../stores/useGraphicsStore";
 import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
 import Graphic from "@arcgis/core/Graphic";
+import SceneView from "@arcgis/core/views/SceneView";
 
 const useGraphics = () => {
-  const { setGraphic, graphicsMap, removeGraphic } = useGraphicsStore();
+  const { setGraphic, removeGraphic, getGraphic } = useGraphicsStore();
 
   const symbol = new PointSymbol3D({
     symbolLayers: [
@@ -23,35 +24,50 @@ const useGraphics = () => {
     ],
   });
 
+  const pointGeometry = (lat: number, long: number) =>
+    new Point({
+      latitude: lat,
+      longitude: long,
+      z: 5,
+    });
+
   const buildBusGraphics = (busPoint: BusTrip) => {
     const { latitude, longitude } = busPoint.getCurrentLocation();
 
-    const point = new Point({
-      latitude,
-      longitude,
-      z: 5,
-    });
+    const point = pointGeometry(latitude, longitude);
 
     return new Graphic({ geometry: point, symbol });
   };
 
-  const createBusGraphics = (busData: BusTrip[]) => {
-    busData.forEach((bus) => {
+  const createBusGraphics = (busData: BusTrip[], view: SceneView) => {
+    busData.map((bus) => {
+      const existingGraphic = getGraphic(bus.id);
+      if (existingGraphic) {
+        const { latitude, longitude } = bus.getCurrentLocation();
+        existingGraphic.geometry = pointGeometry(latitude, longitude);
+        return;
+      }
       const busGraphic = buildBusGraphics(bus);
       setGraphic(bus.id, busGraphic);
+      view?.graphics.add(busGraphic);
     });
   };
 
-  const destroyBusGraphics = (busData: BusTrip[]) => {
-    graphicsMap.forEach((_, key) => {
-      const exists = busData.some((bus) => bus.id === key);
-      if (!exists) {
-        removeGraphic(key);
+  const destroyBusGraphics = (busData: BusTrip[], view: SceneView) => {
+    busData.map((bus) => {
+      const graphicToRemove = getGraphic(bus.id);
+      if (graphicToRemove) {
+        removeGraphic(bus.id);
+        view?.graphics.remove(graphicToRemove);
       }
     });
   };
 
-  return { createBusGraphics, destroyBusGraphics, buildBusGraphics };
+  return {
+    createBusGraphics,
+    destroyBusGraphics,
+    buildBusGraphics,
+  };
 };
 
 export default useGraphics;
