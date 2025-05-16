@@ -1,6 +1,7 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import WebScene from "@arcgis/core/WebScene";
 import SceneView from "@arcgis/core/views/SceneView";
+import SceneLayer from "@arcgis/core/layers/SceneLayer";
 import esriConfig from "@arcgis/core/config";
 import Graphic from "@arcgis/core/Graphic";
 
@@ -21,10 +22,16 @@ const WebSceneView = forwardRef<WebSceneViewHandle>((_, ref) => {
   const viewReady = useRef<boolean>(null);
 
   esriConfig.portalUrl = "https://sig.niteroi.rj.gov.br/portal";
+
+  const buildingsLayer = new SceneLayer({
+    url: "https://tiles.arcgis.com/tiles/TpaOLI1HCh5AcRQB/arcgis/rest/services/Edifica%C3%A7%C3%B5es_SLPK_102100/SceneServer/layers/0",
+    title: "Edificações 3D",
+  });
   const scene = new WebScene({
     portalItem: {
-      id: "d4d8e30c1f984346a67b1feba7fd3e6e",
+      id: "7303de33e35f4a47b9dcf137766418b2",
     },
+    layers: [buildingsLayer],
   });
 
   const initialCamConfig = {
@@ -41,6 +48,7 @@ const WebSceneView = forwardRef<WebSceneViewHandle>((_, ref) => {
       container: viewDiv.current as HTMLDivElement,
       map: scene,
       camera: initialCamConfig,
+      qualityProfile: "high",
     });
 
     viewRef.current = view;
