@@ -24,7 +24,7 @@ const WebSceneView = forwardRef<WebSceneViewHandle>((_, ref) => {
   esriConfig.portalUrl = "https://sig.niteroi.rj.gov.br/portal";
 
   const buildingsLayer = new SceneLayer({
-    url: "https://tiles.arcgis.com/tiles/TpaOLI1HCh5AcRQB/arcgis/rest/services/Edifica%C3%A7%C3%B5es_SLPK_102100/SceneServer/layers/0",
+    url: "https://tiles.arcgis.com/tiles/TpaOLI1HCh5AcRQB/arcgis/rest/services/Teste_Edifica%C3%A7%C3%B5es_v3/SceneServer/layers/0",
     title: "Edificações 3D",
   });
   const scene = new WebScene({
